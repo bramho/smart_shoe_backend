@@ -16,14 +16,16 @@ class ViewController:
     
     ///Mark properties:
     
-    @IBOutlet weak var log: UITextView!
-    
     var manager: CBCentralManager!
     var leftShoe: CBPeripheral!
     var rightShoe: CBPeripheral!
     
     let leftShoeName = "IOFIT_Left"
     let rightShoeName = "IOFIT_Right"
+    
+    let SERVICE_UUID = CBUUID.init(string: "058D0001-CA72-4C8B-8084-25E049936B31")
+    let REQUEST_UUID = CBUUID.init(string: "058D0002-CA72-4C8B-8084-25E049936B31")
+    let RESPONSE_UUID = CBUUID.init(string: "058D0003-CA72-4C8B-8084-25E049936B31")
     
     var leftShoeVerified = false
     var rightShoeVerified = false
@@ -43,7 +45,7 @@ class ViewController:
         if central.state == CBManagerState.poweredOn {
             central.scanForPeripherals(withServices: nil, options: nil)
         } else {
-            log.insertText("Bluetooth not available.")
+            print("Bluetooth not available.")
         }
     }
     
@@ -61,7 +63,7 @@ class ViewController:
             
             self.leftShoeVerified = true
             
-            log.insertText(" Connected with left shoe: " + (device! as String))
+            print(" Connected with left shoe: " + (device! as String))
             
             manager.connect(peripheral, options: nil)
         } else if device?.contains(rightShoeName) == true {
@@ -71,9 +73,9 @@ class ViewController:
             
             self.rightShoeVerified = true
             
-            log.insertText(" Connected with right shoe: " + (device! as String))
+            print(" Connected with right shoe: " + (device! as String))
             
-            manager.connect(peripheral, options: nil)
+            //manager.connect(peripheral, options: nil)
         }
         
         if leftShoeVerified && rightShoeVerified {
@@ -91,19 +93,18 @@ class ViewController:
         for service in peripheral.services! {
             let thisService = service as CBService
             
-            if thisService.includedServices != nil {
-                for secondaryService in thisService.includedServices! {
-                    let thisSecondaryService = secondaryService as CBService
-                    
-                    log.insertText("Secondary Service discovered: " + thisSecondaryService.description)
-                    
-                    peripheral.discoverCharacteristics(nil, for: thisSecondaryService)
-                }
+            if service.uuid == RESPONSE_UUID {
+                peripheral.discoverCharacteristics(nil, for: thisService)
             }
             
-            log.insertText("Service discovered: " + thisService.description)
-            peripheral.discoverCharacteristics(nil, for: thisService)
+            if service.uuid == REQUEST_UUID {
+                peripheral.discoverCharacteristics(nil, for: thisService)
+            }
             
+            if service.uuid == SERVICE_UUID {
+                peripheral.discoverCharacteristics([RESPONSE_UUID, REQUEST_UUID], for: thisService)
+            }
+    
         }
     }
     
@@ -113,7 +114,12 @@ class ViewController:
         for characteristic in service.characteristics! {
             let thisCharacteristic = characteristic as CBCharacteristic
             
-            log.insertText("Characteristic discovered: "  + thisCharacteristic.description)
+            print(thisCharacteristic)
+            
+            if thisCharacteristic.uuid == REQUEST_UUID {
+                self.leftShoe.setNotifyValue(true, for: thisCharacteristic)
+            }
+            
             self.leftShoe.setNotifyValue(true, for: thisCharacteristic)
             
         }
