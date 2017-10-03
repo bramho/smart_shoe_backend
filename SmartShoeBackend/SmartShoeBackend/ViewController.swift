@@ -75,7 +75,7 @@ class ViewController:
             
             print(" Connected with right shoe: " + (device! as String))
             
-            //manager.connect(peripheral, options: nil)
+            manager.connect(peripheral, options: nil)
         }
         
         if leftShoeVerified && rightShoeVerified {
@@ -91,20 +91,21 @@ class ViewController:
     func peripheral(_ peripheral: CBPeripheral,
                     didDiscoverServices error: Error?) {
         for service in peripheral.services! {
-            let thisService = service as CBService
-            
-            if service.uuid == RESPONSE_UUID {
-                peripheral.discoverCharacteristics(nil, for: thisService)
+            if (peripheral.name?.contains(leftShoeName))! {
+                let thisService = service as CBService
+                
+                if service.uuid == RESPONSE_UUID {
+                    peripheral.discoverCharacteristics(nil, for: thisService)
+                }
+                
+                if service.uuid == REQUEST_UUID {
+                    peripheral.discoverCharacteristics(nil, for: thisService)
+                }
+                
+                if service.uuid == SERVICE_UUID {
+                    peripheral.discoverCharacteristics([RESPONSE_UUID, REQUEST_UUID], for: thisService)
+                }
             }
-            
-            if service.uuid == REQUEST_UUID {
-                peripheral.discoverCharacteristics(nil, for: thisService)
-            }
-            
-            if service.uuid == SERVICE_UUID {
-                peripheral.discoverCharacteristics([RESPONSE_UUID, REQUEST_UUID], for: thisService)
-            }
-    
         }
     }
     
@@ -114,13 +115,13 @@ class ViewController:
         for characteristic in service.characteristics! {
             let thisCharacteristic = characteristic as CBCharacteristic
             
-            print(thisCharacteristic)
-            
             if thisCharacteristic.uuid == REQUEST_UUID {
                 self.leftShoe.setNotifyValue(true, for: thisCharacteristic)
             }
             
-            self.leftShoe.setNotifyValue(true, for: thisCharacteristic)
+            if(thisCharacteristic.uuid == RESPONSE_UUID) {
+                self.leftShoe.setNotifyValue(true, for: thisCharacteristic)
+            }
             
         }
     }
@@ -128,6 +129,8 @@ class ViewController:
     func peripheral(_ peripheral: CBPeripheral,
                     didUpdateValueFor characteristic: CBCharacteristic,
                     error: Error?) {
+        
+        print(peripheral.readValue(for: characteristic))
         
         let data = characteristic.value
         let values = [UInt8](data!)
