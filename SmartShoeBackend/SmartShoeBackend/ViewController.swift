@@ -140,6 +140,12 @@ class ViewController:
                 if(peripheral.name?.contains(leftShoeName))! {
                     self.leftShoe.setNotifyValue(true, for: thisCharacteristic)
                     
+                    let request = generateRequest()
+                    let reqData = NSData(bytes: request, length: request.count * MemoryLayout<UInt8>.size)
+                    print(reqData)
+                    
+                    peripheral.writeValue(reqData as Data, for: characteristic, type: CBCharacteristicWriteType.withResponse)
+                    
 //                    var a = [119, 96, 108, 116, 115, 97, 108, 116, 267]
 //                    var arr = [UInt8](repeating: 0x01, count: 9)
 //                    for i in 0...(a.count - 1){
@@ -174,28 +180,9 @@ class ViewController:
             
             if(thisCharacteristic.uuid == RESPONSE_UUID) {
                 if(peripheral.name?.contains(leftShoeName))! {
-                    let descriptors: [CBDescriptor]? = thisCharacteristic.descriptors;
-                    if(descriptors != nil) {
-                        for descriptor in descriptors! {
-                            if descriptor.uuid == DESCRIPTOR_UUID {
-                                print(descriptor)
-                                print(descriptor.description)
-                            }
-                        }
-                    }
                     self.leftShoe.setNotifyValue(true, for: thisCharacteristic)
                     self.leftShoe.discoverDescriptors(for: thisCharacteristic)
                 } else if (peripheral.name?.contains(rightShoeName))! {
-                    let descriptors: [CBDescriptor]? = thisCharacteristic.descriptors;
-                    if(descriptors != nil) {
-                        for descriptor in descriptors! {
-                            if descriptor.uuid == DESCRIPTOR_UUID {
-                                print(descriptor)
-                                print(descriptor.description)
-                            }
-                        }
-                    }
-                    
                     self.rightShoe.setNotifyValue(true, for: thisCharacteristic)
                     self.rightShoe.discoverDescriptors(for: thisCharacteristic)
                 }
@@ -212,8 +199,7 @@ class ViewController:
         
         if(descriptors?.count != 0) {
             for descriptor in descriptors! {
-                print(descriptor)
-                print(descriptor.uuid)
+              
             }
         }
     }
@@ -227,12 +213,13 @@ class ViewController:
         
         let values = [UInt8](data!)
         //reverseCypher(cypher: values[0], outcome: values[1])
-        let request = generateRequest()
-        print(request)
+        
         
     }
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        print(characteristic)
+        print(error)
         if(characteristic.uuid == REQUEST_UUID) {
             print(peripheral.readValue(for: characteristic))
         }
@@ -278,12 +265,11 @@ class ViewController:
     func generateRequest() -> [UInt8] {
         var n : Int = 119 + 96
         let currentTime : UInt32 = UInt32(NSDate().timeIntervalSince1970)
-        let byteArray: [UInt8] = getByteArray(m: currentTime)
+        let byteArray: [UInt8] = ByteUtils().getByteArray(m: currentTime)
         let b3 : UInt8 = byteArray[0] ^ 0x6c
         let b4 : UInt8 = byteArray[1] ^ 0x74
         let b5 : UInt8 = byteArray[2] ^ 0x73
         let b6 : UInt8 = byteArray[3] ^ 0x61
-        print (b3, b4, b5, b6)
         
         n = (((n + Int(b6)) + 108) + 116)
         
@@ -293,30 +279,10 @@ class ViewController:
         
         let c : [UInt8] = [119, 96, b3, b4, b5, b6, 108, 116, UInt8(n)]
         
+        
         return c
     }
     
-    func getByteArray(m: UInt32) -> [UInt8] {
-        var bigEndian = m.bigEndian;
-        let count = MemoryLayout<UInt32>.size
-        let bytePtr = withUnsafePointer(to: &bigEndian) {
-            $0.withMemoryRebound(to: UInt8.self, capacity: count) {
-                UnsafeBufferPointer(start: $0, count: count)
-            }
-        }
-        
-        let n = Array(bytePtr)
-        
-        return n
-    }
     
-    func parseBytesToPacket(array: [UInt8]) {
-        
-    }
-    
-    
-
-
-
 }
 

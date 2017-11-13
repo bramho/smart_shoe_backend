@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		479786221FB9BCE3000FFE4B /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479786211FB9BCE3000FFE4B /* Packet.swift */; };
+		479786241FB9CA06000FFE4B /* ByteUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479786231FB9CA06000FFE4B /* ByteUtils.swift */; };
 		47B6C3681F72850C00CA539E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6C3671F72850C00CA539E /* AppDelegate.swift */; };
 		47B6C36A1F72850C00CA539E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6C3691F72850C00CA539E /* ViewController.swift */; };
 		47B6C36D1F72850C00CA539E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47B6C36B1F72850C00CA539E /* Main.storyboard */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		479786211FB9BCE3000FFE4B /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		479786231FB9CA06000FFE4B /* ByteUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteUtils.swift; sourceTree = "<group>"; };
 		47B6C3641F72850C00CA539E /* SmartShoeBackend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartShoeBackend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47B6C3671F72850C00CA539E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; usesTabs = 0; };
 		47B6C3691F72850C00CA539E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 				47B6C36E1F72850C00CA539E /* Assets.xcassets */,
 				47B6C3701F72850C00CA539E /* LaunchScreen.storyboard */,
 				47B6C3731F72850C00CA539E /* Info.plist */,
+				479786211FB9BCE3000FFE4B /* Packet.swift */,
+				479786231FB9CA06000FFE4B /* ByteUtils.swift */,
 			);
 			path = SmartShoeBackend;
 			sourceTree = "<group>";
@@ -260,8 +266,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				479786221FB9BCE3000FFE4B /* Packet.swift in Sources */,
 				47B6C36A1F72850C00CA539E /* ViewController.swift in Sources */,
 				47B6C3681F72850C00CA539E /* AppDelegate.swift in Sources */,
+				479786241FB9CA06000FFE4B /* ByteUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
