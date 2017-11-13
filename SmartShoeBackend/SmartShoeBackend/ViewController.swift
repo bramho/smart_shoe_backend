@@ -211,7 +211,17 @@ class ViewController:
         
         let data = characteristic.value
         
+        print(data)
+        
         let values = [UInt8](data!)
+        
+        let packet = Packet();
+        
+        if(data?.count == 20) {
+            var result = packet.parseByteToPacket(array: values)
+            print(result)
+        }
+
         //reverseCypher(cypher: values[0], outcome: values[1])
         
         
