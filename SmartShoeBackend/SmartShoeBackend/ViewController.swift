@@ -140,9 +140,10 @@ class ViewController:
                 if(peripheral.name?.contains(leftShoeName))! {
                     self.leftShoe.setNotifyValue(true, for: thisCharacteristic)
                     
-                    let request = generateRequest()
+                    let request = generateRequest(shoeType: 1)
                     let reqData = NSData(bytes: request, length: request.count * MemoryLayout<UInt8>.size)
                     print(reqData)
+                    
                     
                     peripheral.writeValue(reqData as Data, for: characteristic, type: CBCharacteristicWriteType.withResponse)
                     
@@ -157,6 +158,15 @@ class ViewController:
 //                    self.leftShoe.writeValue(data,
 //                                             for: thisCharacteristic,
 //                                             type: CBCharacteristicWriteType.withResponse)
+                } else if (peripheral.name?.contains(rightShoeName))! {
+                    self.rightShoe.setNotifyValue(true, for: thisCharacteristic)
+                    
+                    let request = generateRequest(shoeType: 2)
+                    let reqData = NSData(bytes: request, length: request.count * MemoryLayout<UInt8>.size)
+                    print(reqData)
+                    
+                    
+                    peripheral.writeValue(reqData as Data, for: characteristic, type: CBCharacteristicWriteType.withResponse)
                 }
                 
 //                if(peripheral.name?.contains(rightShoeName))! {
@@ -272,25 +282,79 @@ class ViewController:
         return Int(bitResult, radix: 10)!
     }
     
-    func generateRequest() -> [UInt8] {
-        var n : Int = 119 + 96
-        let currentTime : UInt32 = UInt32(NSDate().timeIntervalSince1970)
-        let byteArray: [UInt8] = ByteUtils().getByteArray(m: currentTime)
-        let b3 : UInt8 = byteArray[0] ^ 0x6c
-        let b4 : UInt8 = byteArray[1] ^ 0x74
-        let b5 : UInt8 = byteArray[2] ^ 0x73
-        let b6 : UInt8 = byteArray[3] ^ 0x61
-        
-        n = (((n + Int(b6)) + 108) + 116)
-        
-        while(n > 255) {
-            n -= 256;
+    func generateRequest(requestType: Int, requestValue: Int, shoeType: Int) -> [UInt8] {
+        /// Depending on the type of the shoe (left or right) certain bits regarding the request will need to be appended to the device in order to activate readout.
+        switch requestType {
+            
+        case 4:
+            var n : Int = 119 + 96
+            let currentTime : UInt32 = UInt32(NSDate().timeIntervalSince1970)
+            let byteArray: [UInt8] = ByteUtils().getByteArray(m: currentTime)
+            let b3 : UInt8 = byteArray[0] ^ 0x6c
+            let b4 : UInt8 = byteArray[1] ^ 0x74
+            let b5 : UInt8 = byteArray[2] ^ 0x73
+            let b6 : UInt8 = byteArray[3] ^ 0x61
+            
+            n = (((n + Int(b6)) + 108) + 116)
+            
+            while(n > 255) {
+                n -= 256;
+            }
+            // BITS: 02 41 00 10 00 0c 00 04 00 52 0e 00 77 60
+            if(shoeType == 1){
+                let c : [UInt8] = [2, 65, 0, 16, 0, 12, 0, 4, 0, 82, 14, 0, 119, 96, b3, b4, b5, b6, 108, 116, UInt8(n)]
+                return c
+            } else if (shoeType == 2) {
+                let c : [UInt8] = [2, 66, 0, 16, 0, 12, 0, 4, 0, 82, 14, 0, 119, 96, b3, b4, b5, b6, 108, 116, UInt8(n)]
+                return c
+            } else {
+                return [0]
+            }
+            
+        case 3:
+            let n : Int = 112 + 96
+            let b2 : UInt8 = UInt8(requestValue) ^ 0x6c
+            var d : Int = ((n + Int(b2)) + 116)
+            
+            while d > 255 {
+                d -= 256
+            }
+            
+            let c : [UInt8] = [112, 96, b2, 116, UInt8(d)]
+            
+            return c
+            
+        case 2:
+            var n : Int = 113 + 96 + 110 + 117 + 115 + 97 + 108 + 116 + 114
+            
+            while n > 255 {
+                n -= 256
+            }
+            
+            let b : UInt8 = UInt8(requestValue) ^ 0x61
+            
+            let c : [UInt8] = [113, 96, 110, 117, 115, 97, 108, 116, 114, b, 108, UInt8((n + Int(b)) + 108)]
+            
+            return c
+            
+        case 32:
+            var n : Int = 83 + 96
+            var byteArray2 : [UInt8] = ByteUtils().getByteArray(m: UInt16(requestValue))
+            var b7 : UInt8 = byteArray2[0] ^ 0x6c
+            n += Int(b7)
+            var b8 : UInt8 = byteArray2[1] ^ 0x74
+            n += Int(b8)
+            
+            while n > 255 {
+                n -= 256
+            }
+            
+            let c : [UInt8] = [83, 96, b7, b8, UInt8(n)]
+            
+        default:
+            return [0]
         }
         
-        let c : [UInt8] = [119, 96, b3, b4, b5, b6, 108, 116, UInt8(n)]
-        
-        
-        return c
     }
     
     

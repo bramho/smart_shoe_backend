@@ -23,6 +23,20 @@ class ByteUtils {
         return n
     }
     
+    func getByteArray(m: UInt16) -> [UInt8] {
+        var bigEndian = m.bigEndian
+        let count = MemoryLayout<UInt16>.size
+        let bytePtr = withUnsafePointer(to: &bigEndian) {
+            $0.withMemoryRebound(to: UInt8.self, capacity: count) {
+                UnsafeBufferPointer(start: $0, count: count)
+            }
+        }
+        
+        let n = Array(bytePtr)
+        
+        return n
+    }
+    
     func getShortFromByte(bytes: [UInt8]) -> UInt16 {
         if(bytes.count * 2 != 16){
             return 0

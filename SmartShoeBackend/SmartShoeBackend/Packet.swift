@@ -45,7 +45,7 @@ class Packet {
         if(byteArray.count != 20){
             return packet;
         } else {
-            var b : Int = 0 // REMEMBER TO CAST THIS TO A UINT8 - IT'S A BYTE BUT WE CAN'T AUTO-OVERFLOW BYTES IN SWIFt
+            var b : Int = 0 // REMEMBER TO CAST THIS TO A UINT8 - IT'S A BYTE BUT WE CAN'T AUTO-OVERFLOW BYTES IN SWIFT
             var i : Int = 0
             var n : Int = 0
             while (i < 19) {
