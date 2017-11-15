@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SmartShoeBackend/ViewController.swift"
-            timestampString = "532356918.411314"
+            timestampString = "532441267.167376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "4"
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SmartShoeBackend/ViewController.swift"
-            timestampString = "532356918.411682"
+            timestampString = "532441267.16747"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
             landmarkName = "peripheral(_:didUpdateValueFor:error:)"
             landmarkType = "7">
          </BreakpointContent>

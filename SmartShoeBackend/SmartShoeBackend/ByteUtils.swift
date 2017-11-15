@@ -38,21 +38,17 @@ class ByteUtils {
     }
     
     func getShortFromByte(bytes: [UInt8]) -> UInt16 {
-        if(bytes.count * 2 != 16){
-            return 0
-        }
-        
+        print("bytes: ")
+        print(bytes)
         let short = UnsafePointer(bytes).withMemoryRebound(to: UInt16.self, capacity: 1) {
             $0.pointee
         }
-        
+        print(UInt16(short))
         return UInt16(short)
     }
     
     func getIntFromBytes(bytes: [UInt8]) -> Int {
-        if(bytes.count * 4 != 32) {
-            return 0
-        }
+        
         let int = UnsafePointer(bytes).withMemoryRebound(to: Int.self, capacity: 1) {
             $0.pointee
         }
