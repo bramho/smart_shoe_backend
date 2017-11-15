@@ -6,10 +6,15 @@
 //  Copyright © 2017 MTNW07-17. All rights reserved.
 //
 
+import UIKit
 import Foundation
 import CoreBluetooth
 
-class Connector {
+class Connector :
+    NSObject,
+    CBCentralManagerDelegate,
+    CBPeripheralDelegate {
+    
     let SERVICE_UUID = CBUUID.init(string: "058D0001-CA72-4C8B-8084-25E049936B31")
     let REQUEST_UUID = CBUUID.init(string: "058D0002-CA72-4C8B-8084-25E049936B31")
     let RESPONSE_UUID = CBUUID.init(string: "058D0003-CA72-4C8B-8084-25E049936B31")
@@ -23,12 +28,100 @@ class Connector {
     let REQUEST_START_CALIBRATION_MODE = 7;
     let REQUEST_STOP_DATA_TRANSFER = 3;
     let WAITING_DELAY = 1000
-    var manager : CBManager!
+    var manager : CBCentralManager!
     var device: CBPeripheral!
-    var requestCharacteristic : CBCharacteristic!
     
-    init(newDevice: CBPeripheral) {
-        device = newDevice
+    var requestCharacteristic : CBCharacteristic!
+    var deviceName : String!
+    
+    init(newDevice: String) {
+        super.init()
+        deviceName = newDevice
+        
+        manager = CBCentralManager(delegate: self, queue: nil)
+    }
+    
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        if central.state == CBManagerState.poweredOn {
+            central.scanForPeripherals(withServices: nil, options: nil)
+        } else {
+            print("Bluetooth not available")
+        }
+    }
+    
+    func centralManager(_ central: CBCentralManager,
+                        didDiscover peripheral: CBPeripheral,
+                        advertisementData: [String : Any],
+                        rssi RSSI: NSNumber) {
+        let deviceData = (advertisementData as NSDictionary)
+        .object(forKey: (CBAdvertisementDataLocalNameKey)) as? NSString
+        
+        if deviceData?.contains(deviceName) == true {
+            self.device = peripheral
+            self.device.delegate = self
+            
+            print(" Connected with Shoe: " + deviceName)
+            
+            manager.connect(peripheral, options: nil)
+            
+            manager.stopScan()
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        for service in peripheral.services! {
+            let thisService = service as CBService
+            
+            if service.uuid == SERVICE_UUID {
+                peripheral.discoverCharacteristics([RESPONSE_UUID, REQUEST_UUID], for: thisService)
+            }
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        for characteristic in service.characteristics! {
+            let thisCharacteristic = characteristic as CBCharacteristic
+            
+            if thisCharacteristic.uuid == REQUEST_UUID {
+                self.device.setNotifyValue(true, for: thisCharacteristic)
+                requestCharacteristic = thisCharacteristic
+            }
+            
+            if thisCharacteristic.uuid == RESPONSE_UUID {
+                self.device.setNotifyValue(true, for: thisCharacteristic)
+            }
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral,
+                    didUpdateValueFor characteristic: CBCharacteristic,
+                    error: Error?) {
+        let data = characteristic.value
+        
+        print(data!)
+        
+        let values = [UInt8](data!)
+        
+        let packet = Packet()
+        
+        if(data?.count == 20){
+            let result = packet.parseByteToPacket(array: values)
+            print(result)
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        print(characteristic)
+        print(error)
+        if(characteristic.uuid == REQUEST_UUID) {
+            print(peripheral.readValue(for: characteristic))
+        }
+    }
+    
+    func centralManager(_ central: CBCentralManager,
+                        didDisconnectPeripheral peripheral: CBPeripheral,
+                        error: Error?) {
+        central.scanForPeripherals(withServices: nil, options: nil)
     }
     
     func requestCommand(n: Int) {
