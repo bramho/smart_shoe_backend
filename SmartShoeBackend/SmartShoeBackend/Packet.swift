@@ -40,6 +40,34 @@ class Packet {
     func generateRequest(requestType: Int, requestValue: Int, shoeType: Int) -> [UInt8] {
         /// Depending on the type of the shoe (left or right) certain bits regarding the request will need to be appended to the device in order to activate readout.
         switch requestType {
+        case 2:
+            /// bit sequence header: 02 41 00 13 00 0f 00 04 00 52 0e 00
+            let n : Int = 113 + 96 + 110 + 117 + 115 + 97 + 108 + 116 + 114
+            
+            let b : UInt8 = UInt8(requestValue) ^ 0x61
+            
+            var d = (n + Int(b)) + 108
+            
+            while d > 255 {
+                d -= 256
+            }
+            // 02 41 00 13 00 0f 00 04 00 52 0e 00
+            let c : [UInt8] = [2, UInt8(shoeType + 64), 0, 19, 0, 15, 0, 4, 0, 82, 14, 0, 113, 96, 110, 117, 115, 97, 108, 116, 114, b, 108, UInt8(d)]
+            return c
+            
+        case 3:
+            // komt niet in logs voor
+            let n : Int = 112 + 96
+            let b2 : UInt8 = UInt8(requestValue) ^ 0x6c
+            var d : Int = ((n + Int(b2)) + 116)
+            
+            while d > 255 {
+                d -= 256
+            }
+            // 02 42 0c 00 08 00 04 00 52 0e 00
+            let c : [UInt8] = [2, UInt8( 64 + shoeType), 12, 0, 8, 0, 4, 0, 82, 14, 0, 112, 96, b2, 116, UInt8(d)]
+            
+            return c
             
         case 4:
             var n : Int = 119 + 96
@@ -56,43 +84,41 @@ class Packet {
                 n -= 256;
             }
             // BITS: 02 41 00 10 00 0c 00 04 00 52 0e 00 77 60
-            if(shoeType == 1){
-                let c : [UInt8] = [2, 65, 0, 16, 0, 12, 0, 4, 0, 82, 14, 0, 119, 96, b3, b4, b5, b6, 108, 116, UInt8(n)]
-                return c
-            } else if (shoeType == 2) {
-                let c : [UInt8] = [2, 66, 0, 16, 0, 12, 0, 4, 0, 82, 14, 0, 119, 96, b3, b4, b5, b6, 108, 116, UInt8(n)]
-                return c
-            } else {
-                return [0]
-            }
+            let c : [UInt8] = [2, UInt8(64 + shoeType), 0, 16, 0, 12, 0, 4, 0, 82, 14, 0, 119, 96, b3, b4, b5, b6, 108, 116, UInt8(n)]
+            return c
             
-        case 3:
-            let n : Int = 112 + 96
-            let b2 : UInt8 = UInt8(requestValue) ^ 0x6c
-            var d : Int = ((n + Int(b2)) + 116)
+        case 5:
+            let n : Int = 118 + 96
+            let b9 : UInt8 = UInt8(requestValue) ^ 0x6c
+            var d : Int = Int(b9) + n + 116
             
             while d > 255 {
                 d -= 256
             }
             
-            let c : [UInt8] = [112, 96, b2, 116, UInt8(d)]
+            let c : [UInt8] = [118, 96, b9, 116, UInt8(d)]
             
             return c
             
-        case 2:
-            var n : Int = 113 + 96 + 110 + 117 + 115 + 97 + 108 + 116 + 114
+        case 6:
+            let n : Int = 117 + 96
+            let b10 : UInt8 = UInt8(requestValue) ^ 0x6c
+            var d : Int = Int(b10) + n + 116
             
-            while n > 255 {
-                n -= 256
+            while d > 255 {
+                d -= 256
             }
             
-            let b : UInt8 = UInt8(requestValue) ^ 0x61
-            
-            let c : [UInt8] = [113, 96, 110, 117, 115, 97, 108, 116, 114, b, 108, UInt8((n + Int(b)) + 108)]
+            let c : [UInt8] = [117, 96, b10, 116, UInt8(d)]
             
             return c
             
+        case 16:
+            // 02 42 00 0c 00 08 00 04 00 52 0e 00
+            return [2, 66, 0, 12, 0, 8, 0, 4, 0, 82, 14, 0, 99, 96, 108, 116, 163]
+            
         case 32:
+            // komt niet in de logs voor
             var n : Int = 83 + 96
             var byteArray2 : [UInt8] = ByteUtils().getByteArray(m: UInt16(requestValue))
             let b7 : UInt8 = byteArray2[0] ^ 0x6c
@@ -108,6 +134,10 @@ class Packet {
             
             return c
             
+        case 69:
+            return [2, UInt8(shoeType + 64), 0, 9, 0, 5, 0, 4, 0, 18, 12, 0, 1, 0]
+        
+            
         default:
             return [0]
         }
@@ -118,13 +148,10 @@ class Packet {
     func parseByteToPacket(array: [UInt8]) -> Packet {
         var packet = Packet()
         var byteArray = array;
-        print("count")
-        print(byteArray.count)
         if(byteArray.count != 20){
             print("empty")
             return packet;
         } else {
-            print("else")
             var b : Int = 0 // REMEMBER TO CAST THIS TO A UINT8 - IT'S A BYTE BUT WE CAN'T AUTO-OVERFLOW BYTES IN SWIFT
             var i : Int = 0
             var n : Int = 0
@@ -140,15 +167,9 @@ class Packet {
                 i += 1
             }
             
-            print(byteArray)
-            print(b)
-            
             while(b > 255){
                 b -= 256
             }
-            
-            print (b)
-            print (byteArray[19])
             
             if(UInt8(b) != byteArray[19]){
                 return packet
@@ -158,8 +179,9 @@ class Packet {
             packet2.command = byteArray[0]
             packet2.verifiedPacket = true
             packet = packet2;
-            print("Command")
-            print(packet2.command)
+            
+            print(byteArray)
+            
             switch(packet2.command) {
                 
             case 2:

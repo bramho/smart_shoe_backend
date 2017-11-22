@@ -38,12 +38,9 @@ class ByteUtils {
     }
     
     func getShortFromByte(bytes: [UInt8]) -> UInt16 {
-        print("bytes: ")
-        print(bytes)
         let short = UnsafePointer(bytes).withMemoryRebound(to: UInt16.self, capacity: 1) {
             $0.pointee
         }
-        print(UInt16(short))
         return UInt16(short)
     }
     

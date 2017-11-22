@@ -12,7 +12,6 @@ import CoreBluetooth
 
 class Connector :
     NSObject,
-    CBCentralManagerDelegate,
     CBPeripheralDelegate {
     
     let SERVICE_UUID = CBUUID.init(string: "058D0001-CA72-4C8B-8084-25E049936B31")
@@ -28,44 +27,23 @@ class Connector :
     let REQUEST_START_CALIBRATION_MODE = 7;
     let REQUEST_STOP_DATA_TRANSFER = 3;
     let WAITING_DELAY = 1000
-    var manager : CBCentralManager!
     var device: CBPeripheral!
+    
+    var n4 = 0
+    var n5 = 0
     
     var requestCharacteristic : CBCharacteristic!
     var deviceName : String!
+    var shoeType : Int!
     
-    init(newDevice: String) {
+    init(newDevice: CBPeripheral, shoeType: Int) {
         super.init()
-        deviceName = newDevice
+        device = newDevice
         
-        manager = CBCentralManager(delegate: self, queue: nil)
-    }
-    
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state == CBManagerState.poweredOn {
-            central.scanForPeripherals(withServices: nil, options: nil)
-        } else {
-            print("Bluetooth not available")
-        }
-    }
-    
-    func centralManager(_ central: CBCentralManager,
-                        didDiscover peripheral: CBPeripheral,
-                        advertisementData: [String : Any],
-                        rssi RSSI: NSNumber) {
-        let deviceData = (advertisementData as NSDictionary)
-        .object(forKey: (CBAdvertisementDataLocalNameKey)) as? NSString
+        self.shoeType = shoeType
         
-        if deviceData?.contains(deviceName) == true {
-            self.device = peripheral
-            self.device.delegate = self
-            
-            print(" Connected with Shoe: " + deviceName)
-            
-            manager.connect(peripheral, options: nil)
-            
-            manager.stopScan()
-        }
+        device.delegate = self
+        device.discoverServices([SERVICE_UUID])
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
@@ -97,38 +75,26 @@ class Connector :
                     didUpdateValueFor characteristic: CBCharacteristic,
                     error: Error?) {
         let data = characteristic.value
-        
-        print(data!)
-        
+        print(device.state.rawValue)
         let values = [UInt8](data!)
         
         let packet = Packet()
         
         if(data?.count == 20){
             let result = packet.parseByteToPacket(array: values)
-            print(result)
+            if(result.command == 4 || result.command == 64){
+                print(shoeType)
+                print("Sensor 1: " + String(result.sensorValue1))
+                print("Sensor 2: " + String(result.sensorValue2))
+                print("Sensor 3: " + String(result.sensorValue3))
+                print("Sensor 4: " + String(result.sensorValue4))
+            }	
         }
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        print(characteristic)
-        print(error)
-        if(characteristic.uuid == REQUEST_UUID) {
-            print(peripheral.readValue(for: characteristic))
-        }
-    }
-    
-    func centralManager(_ central: CBCentralManager,
-                        didDisconnectPeripheral peripheral: CBPeripheral,
-                        error: Error?) {
-        central.scanForPeripherals(withServices: nil, options: nil)
     }
     
     func requestCommand(n: Int) {
         let n2 : Int = 0
         let n3 : Int = 0
-        var n4 = n2
-        var n5 = n3
         let packet = Packet()
         
         switch(n) {
@@ -161,10 +127,36 @@ class Connector :
             n5 = 1
             break
         case 8:
-            let generateRequest : [UInt8] = packet.generateRequest(requestType: n4, requestValue: n5, shoeType: 1)
+            print(device.state.rawValue)
+            let generateRequest : [UInt8] = packet.generateRequest(requestType: n4, requestValue: n5, shoeType: self.shoeType)
             if requestCharacteristic.uuid == REQUEST_UUID {
+                if generateRequest.count < 20 {
                 let reqData = NSData(bytes: generateRequest, length: generateRequest.count * MemoryLayout<UInt8>.size)
                 device.writeValue(reqData as Data, for: requestCharacteristic, type: CBCharacteristicWriteType.withResponse)
+                } else {
+//                    for i in 0 ..< abs(generateRequest.count / 20) {
+//                        print(" Generating new packet because too large for base, packet nr." + String(i))
+//                        var dataPacket : [UInt8] = []
+//                        for j in 0 ..< (generateRequest.count - (i * 20)){
+//                            dataPacket.append(generateRequest[(j + i * 20)])
+//                        }
+//
+//                        let reqData = NSData(bytes: dataPacket, length: dataPacket.count * MemoryLayout<UInt8>.size)
+//
+//                        device.writeValue(reqData as Data, for: requestCharacteristic, type: CBCharacteristicWriteType.withResponse)
+//                    }
+                    
+                    var dataPackets : [[UInt8]] = generateRequest.chunk(20)
+                    
+                    for i in 0 ..< dataPackets.count {
+                        let dataPacket = dataPackets[i]
+                        
+                        let reqData = NSData(bytes: dataPacket, length: dataPacket.count * MemoryLayout<UInt8>.size)
+                        device.writeValue(reqData as Data, for: requestCharacteristic, type: CBCharacteristicWriteType.withResponse)
+                    }
+                    
+                    
+                }
             }
             break
         case 9:
@@ -175,6 +167,12 @@ class Connector :
             n4 = 6
             n5 = 1
             break
+            
+        case 11:
+            n4 = 69
+            n5 = 1
+            break
+            
         default:
             n5 = n3
             n4 = n2
@@ -182,3 +180,12 @@ class Connector :
         }
     }
 }
+
+extension Array {
+    func chunk(_ chunkSize: Int) -> [[Element]] {
+        return stride(from: 0, to: self.count, by: chunkSize).map({ (startIndex) -> [Element] in let endIndex = (startIndex.advanced(by: chunkSize) > self.count) ? self.count-startIndex : chunkSize
+            return Array(self[startIndex..<startIndex.advanced(by: endIndex)])
+        })
+    }
+}
+
