@@ -28,6 +28,9 @@ class Connector :
     let REQUEST_STOP_DATA_TRANSFER = 3;
     let WAITING_DELAY = 1000
     var device: CBPeripheral!
+    var shoe: Shoe
+    
+    var canSendCommand: Bool = true;
     
     var n4 = 0
     var n5 = 0
@@ -83,12 +86,21 @@ class Connector :
         if(data?.count == 20){
             let result = packet.parseByteToPacket(array: values)
             if(result.command == 4 || result.command == 64){
-                print(shoeType)
-                print("Sensor 1: " + String(result.sensorValue1))
-                print("Sensor 2: " + String(result.sensorValue2))
-                print("Sensor 3: " + String(result.sensorValue3))
-                print("Sensor 4: " + String(result.sensorValue4))
-            }	
+                if(canSendCommand){
+                    shoe = Shoe.init(shoeType: shoeType, sensor1: Int(result.sensorValue1), sensor2: Int(result.sensorValue2), sensor3: Int(result.sensorValue3), sensor4: Int(result.sensorValue4))
+                } else {
+                    canSendCommand = false
+                    shoe.setSensor1(sensor1: Int(result.sensorValue1))
+                    shoe.setSensor2(sensor2: Int(result.sensorValue2))
+                    shoe.setSensor3(sensor3: Int(result.sensorValue3))
+                    shoe.setSensor4(sensor4: Int(result.sensorValue4))
+
+                    print(shoe.getShoe())
+                }
+            }
+            if(result.gameOver == 4) {
+                canSendCommand = true
+            }
         }
     }
     
@@ -134,18 +146,6 @@ class Connector :
                 let reqData = NSData(bytes: generateRequest, length: generateRequest.count * MemoryLayout<UInt8>.size)
                 device.writeValue(reqData as Data, for: requestCharacteristic, type: CBCharacteristicWriteType.withResponse)
                 } else {
-//                    for i in 0 ..< abs(generateRequest.count / 20) {
-//                        print(" Generating new packet because too large for base, packet nr." + String(i))
-//                        var dataPacket : [UInt8] = []
-//                        for j in 0 ..< (generateRequest.count - (i * 20)){
-//                            dataPacket.append(generateRequest[(j + i * 20)])
-//                        }
-//
-//                        let reqData = NSData(bytes: dataPacket, length: dataPacket.count * MemoryLayout<UInt8>.size)
-//
-//                        device.writeValue(reqData as Data, for: requestCharacteristic, type: CBCharacteristicWriteType.withResponse)
-//                    }
-                    
                     var dataPackets : [[UInt8]] = generateRequest.chunk(20)
                     
                     for i in 0 ..< dataPackets.count {

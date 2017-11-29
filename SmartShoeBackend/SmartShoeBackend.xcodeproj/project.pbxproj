@@ -10,6 +10,7 @@
 		479786221FB9BCE3000FFE4B /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479786211FB9BCE3000FFE4B /* Packet.swift */; };
 		479786241FB9CA06000FFE4B /* ByteUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479786231FB9CA06000FFE4B /* ByteUtils.swift */; };
 		47A4A9EF1FBC6AAB004BC86D /* Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A4A9EE1FBC6AAB004BC86D /* Connector.swift */; };
+		47B4F0701FCEB57900BE3CAA /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B4F06F1FCEB57900BE3CAA /* Shoe.swift */; };
 		47B6C3681F72850C00CA539E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6C3671F72850C00CA539E /* AppDelegate.swift */; };
 		47B6C36A1F72850C00CA539E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6C3691F72850C00CA539E /* ViewController.swift */; };
 		47B6C36D1F72850C00CA539E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47B6C36B1F72850C00CA539E /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 		479786211FB9BCE3000FFE4B /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
 		479786231FB9CA06000FFE4B /* ByteUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteUtils.swift; sourceTree = "<group>"; };
 		47A4A9EE1FBC6AAB004BC86D /* Connector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
+		47B4F06F1FCEB57900BE3CAA /* Shoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
 		47B6C3641F72850C00CA539E /* SmartShoeBackend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartShoeBackend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47B6C3671F72850C00CA539E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; usesTabs = 0; };
 		47B6C3691F72850C00CA539E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				479786211FB9BCE3000FFE4B /* Packet.swift */,
 				479786231FB9CA06000FFE4B /* ByteUtils.swift */,
 				47A4A9EE1FBC6AAB004BC86D /* Connector.swift */,
+				47B4F06F1FCEB57900BE3CAA /* Shoe.swift */,
 			);
 			path = SmartShoeBackend;
 			sourceTree = "<group>";
@@ -203,15 +206,18 @@
 					47B6C3631F72850C00CA539E = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = SUX35HW2S3;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					47B6C3771F72850C00CA539E = {
 						CreatedOnToolsVersion = 8.3.3;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 47B6C3631F72850C00CA539E;
 					};
 					47B6C3821F72850C00CA539E = {
 						CreatedOnToolsVersion = 8.3.3;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 47B6C3631F72850C00CA539E;
 					};
@@ -269,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47B4F0701FCEB57900BE3CAA /* Shoe.swift in Sources */,
 				479786221FB9BCE3000FFE4B /* Packet.swift in Sources */,
 				47B6C36A1F72850C00CA539E /* ViewController.swift in Sources */,
 				47B6C3681F72850C00CA539E /* AppDelegate.swift in Sources */,
@@ -447,7 +454,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = smartshoe.SmartShoeBackend;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -464,7 +472,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = smartshoe.SmartShoeBackend;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -478,7 +487,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = smartshoe.SmartShoeBackendTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartShoeBackend.app/SmartShoeBackend";
 			};
 			name = Debug;
@@ -492,7 +502,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = smartshoe.SmartShoeBackendTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartShoeBackend.app/SmartShoeBackend";
 			};
 			name = Release;
@@ -505,7 +516,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = smartshoe.SmartShoeBackendUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = SmartShoeBackend;
 			};
 			name = Debug;
@@ -518,7 +530,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = smartshoe.SmartShoeBackendUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = SmartShoeBackend;
 			};
 			name = Release;

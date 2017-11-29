@@ -35,6 +35,7 @@ class Packet {
     var shoeType : UInt8 = 0
     var status : UInt8 = 0
     var voltageFactor : UInt16 = 0
+    var gameOver : Int = 0
     let byteUtils = ByteUtils()
     
     func generateRequest(requestType: Int, requestValue: Int, shoeType: Int) -> [UInt8] {
@@ -179,7 +180,7 @@ class Packet {
             packet2.command = byteArray[0]
             packet2.verifiedPacket = true
             packet = packet2;
-            
+             
             print(byteArray)
             
             switch(packet2.command) {
@@ -231,6 +232,7 @@ class Packet {
                 packet2.sensorValue3 = byteUtils.getShortFromByte(bytes: [byteArray[13], byteArray[14]])
                 packet2.sensorValue4 = byteUtils.getShortFromByte(bytes: [byteArray[15], byteArray[16]])
                 packet2.voltageFactor = byteUtils.getShortFromByte(bytes: [byteArray[17], byteArray[18]])
+                packet2.gameOver = Int(byteArray[2])
                 return packet2
                 
             case 5:

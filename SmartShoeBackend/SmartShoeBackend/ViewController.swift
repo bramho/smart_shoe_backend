@@ -52,6 +52,38 @@ class ViewController:
     @IBAction func Initiate(_ sender: Any) {
         leftShoe.requestCommand(n: 11)
         rightShoe.requestCommand(n: 11)
+        
+        print("set 11")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+            self.leftShoe.requestCommand(n: 8)
+            self.rightShoe.requestCommand(n: 8)
+            
+            self.leftShoe.requestCommand(n: 1)
+            self.rightShoe.requestCommand(n: 1)
+            
+            print("set 1")
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                self.leftShoe.requestCommand(n: 8)
+                self.rightShoe.requestCommand(n: 8)
+                
+                self.leftShoe.requestCommand(n: 2)
+                self.rightShoe.requestCommand(n: 2)
+                
+                print("set 2")
+                Timer.scheduledTimer(timeInterval: 0.4, target: self, selector:#selector(self.execute), userInfo: nil, repeats: true)
+                
+            }
+        }
+    }
+
+    @objc func execute(){
+        print("exec")
+        if(self.leftShoe.canSendCommand && self.rightShoe.canSendCommand) {
+            self.leftShoe.requestCommand(n: 8)
+            self.rightShoe.requestCommand(n: 8)
+        }
     }
     
     @IBAction func ActivateButton(_ sender: Any) {
@@ -112,7 +144,7 @@ class ViewController:
                         didDisconnectPeripheral peripheral: CBPeripheral,
                         error: Error?) {
         print("encountered problem and forced disconnect")
-        print(error)
+        print(error as Any)
         if (peripheral.name?.contains(leftShoeName))! {
             leftShoeVerify = false
         } else if (peripheral.name?.contains(rightShoeName))! {
