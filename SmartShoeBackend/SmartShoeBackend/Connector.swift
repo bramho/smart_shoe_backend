@@ -20,17 +20,7 @@ class Connector :
     let REQUEST_UUID = CBUUID.init(string: "058D0002-CA72-4C8B-8084-25E049936B31")
     let RESPONSE_UUID = CBUUID.init(string: "058D0003-CA72-4C8B-8084-25E049936B31")
     let DESCRIPTOR_UUID = CBUUID.init(string: "00002902-0000-1000-8000-00805f9b34fb")
-    // Volgens mij kunnen deze allemaal weg
-    let REQUEST_CANCEL_CALIBRATION_MODE = 8;
-    let REQUEST_CHECK_CAPABILITY = 1;
-    let REQUEST_CHECK_STATUS = 4;
-    let REQUEST_PAIRING_MODE_OFF = 6;
-    let REQUEST_PAIRING_MODE_ON = 5;
-    let REQUEST_SET_SYNC_TIME = 2;
-    let REQUEST_START_CALIBRATION_MODE = 7;
-    let REQUEST_STOP_DATA_TRANSFER = 3;
-    let WAITING_DELAY = 1000
-    //
+
     var device: CBPeripheral!
     var shoe: Shoe!
     
