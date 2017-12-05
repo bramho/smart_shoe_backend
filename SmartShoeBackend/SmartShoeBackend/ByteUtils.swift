@@ -17,7 +17,6 @@ class ByteUtils {
                 UnsafeBufferPointer(start: $0, count: count)
             }
         }
-        
         let n = Array(bytePtr)
         
         return n
@@ -31,7 +30,6 @@ class ByteUtils {
                 UnsafeBufferPointer(start: $0, count: count)
             }
         }
-        
         let n = Array(bytePtr)
         
         return n
@@ -45,11 +43,9 @@ class ByteUtils {
     }
     
     func getIntFromBytes(bytes: [UInt8]) -> Int {
-        
         let int = UnsafePointer(bytes).withMemoryRebound(to: Int.self, capacity: 1) {
             $0.pointee
         }
-        
         return int
     }
 }

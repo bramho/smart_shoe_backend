@@ -14,10 +14,13 @@ class Connector :
     NSObject,
     CBPeripheralDelegate {
     
+    weak var delegate: ConnectorDelegate?
+    
     let SERVICE_UUID = CBUUID.init(string: "058D0001-CA72-4C8B-8084-25E049936B31")
     let REQUEST_UUID = CBUUID.init(string: "058D0002-CA72-4C8B-8084-25E049936B31")
     let RESPONSE_UUID = CBUUID.init(string: "058D0003-CA72-4C8B-8084-25E049936B31")
     let DESCRIPTOR_UUID = CBUUID.init(string: "00002902-0000-1000-8000-00805f9b34fb")
+    // Volgens mij kunnen deze allemaal weg
     let REQUEST_CANCEL_CALIBRATION_MODE = 8;
     let REQUEST_CHECK_CAPABILITY = 1;
     let REQUEST_CHECK_STATUS = 4;
@@ -27,8 +30,9 @@ class Connector :
     let REQUEST_START_CALIBRATION_MODE = 7;
     let REQUEST_STOP_DATA_TRANSFER = 3;
     let WAITING_DELAY = 1000
+    //
     var device: CBPeripheral!
-    var shoe: Shoe
+    var shoe: Shoe!
     
     var canSendCommand: Bool = true;
     
@@ -53,7 +57,7 @@ class Connector :
         for service in peripheral.services! {
             let thisService = service as CBService
             
-            if service.uuid == SERVICE_UUID {
+            if(service.uuid == SERVICE_UUID) {
                 peripheral.discoverCharacteristics([RESPONSE_UUID, REQUEST_UUID], for: thisService)
             }
         }
@@ -63,12 +67,12 @@ class Connector :
         for characteristic in service.characteristics! {
             let thisCharacteristic = characteristic as CBCharacteristic
             
-            if thisCharacteristic.uuid == REQUEST_UUID {
+            if(thisCharacteristic.uuid == REQUEST_UUID) {
                 self.device.setNotifyValue(true, for: thisCharacteristic)
                 requestCharacteristic = thisCharacteristic
             }
             
-            if thisCharacteristic.uuid == RESPONSE_UUID {
+            if(thisCharacteristic.uuid == RESPONSE_UUID) {
                 self.device.setNotifyValue(true, for: thisCharacteristic)
             }
         }
@@ -78,7 +82,6 @@ class Connector :
                     didUpdateValueFor characteristic: CBCharacteristic,
                     error: Error?) {
         let data = characteristic.value
-        print(device.state.rawValue)
         let values = [UInt8](data!)
         
         let packet = Packet()
@@ -88,14 +91,14 @@ class Connector :
             if(result.command == 4 || result.command == 64){
                 if(canSendCommand){
                     shoe = Shoe.init(shoeType: shoeType, sensor1: Int(result.sensorValue1), sensor2: Int(result.sensorValue2), sensor3: Int(result.sensorValue3), sensor4: Int(result.sensorValue4))
-                } else {
                     canSendCommand = false
+                    delegate?.connectorHasReceivedData(self, shoeData: shoe)
+                } else {
                     shoe.setSensor1(sensor1: Int(result.sensorValue1))
                     shoe.setSensor2(sensor2: Int(result.sensorValue2))
                     shoe.setSensor3(sensor3: Int(result.sensorValue3))
                     shoe.setSensor4(sensor4: Int(result.sensorValue4))
-
-                    print(shoe.getShoe())
+                    delegate?.connectorHasReceivedData(self, shoeData: shoe)
                 }
             }
             if(result.gameOver == 4) {
@@ -116,7 +119,7 @@ class Connector :
             break
         case 2:
             n4 = 4
-            n5 = 1//current time
+            n5 = 1 //current time is set in packet class
             break
         case 3:
             n4 = 16
@@ -142,9 +145,9 @@ class Connector :
             print(device.state.rawValue)
             let generateRequest : [UInt8] = packet.generateRequest(requestType: n4, requestValue: n5, shoeType: self.shoeType)
             if requestCharacteristic.uuid == REQUEST_UUID {
-                if generateRequest.count < 20 {
-                let reqData = NSData(bytes: generateRequest, length: generateRequest.count * MemoryLayout<UInt8>.size)
-                device.writeValue(reqData as Data, for: requestCharacteristic, type: CBCharacteristicWriteType.withResponse)
+                if(generateRequest.count < 20) {
+                    let reqData = NSData(bytes: generateRequest, length: generateRequest.count * MemoryLayout<UInt8>.size)
+                    device.writeValue(reqData as Data, for: requestCharacteristic, type: CBCharacteristicWriteType.withResponse)
                 } else {
                     var dataPackets : [[UInt8]] = generateRequest.chunk(20)
                     
@@ -167,12 +170,10 @@ class Connector :
             n4 = 6
             n5 = 1
             break
-            
         case 11:
             n4 = 69
             n5 = 1
             break
-            
         default:
             n5 = n3
             n4 = n2
@@ -183,9 +184,13 @@ class Connector :
 
 extension Array {
     func chunk(_ chunkSize: Int) -> [[Element]] {
-        return stride(from: 0, to: self.count, by: chunkSize).map({ (startIndex) -> [Element] in let endIndex = (startIndex.advanced(by: chunkSize) > self.count) ? self.count-startIndex : chunkSize
+        return stride(from: 0, to: self.count, by: chunkSize).map({
+            (startIndex) -> [Element] in let endIndex = (startIndex.advanced(by: chunkSize) > self.count) ? self.count-startIndex : chunkSize
             return Array(self[startIndex..<startIndex.advanced(by: endIndex)])
         })
     }
 }
 
+protocol ConnectorDelegate: class {
+    func connectorHasReceivedData(_ connector: Connector?, shoeData: Shoe)
+}

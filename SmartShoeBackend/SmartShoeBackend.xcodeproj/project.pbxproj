@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		479786221FB9BCE3000FFE4B /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479786211FB9BCE3000FFE4B /* Packet.swift */; };
 		479786241FB9CA06000FFE4B /* ByteUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479786231FB9CA06000FFE4B /* ByteUtils.swift */; };
+		479F114A1FD0027B00FFB3F6 /* ShoeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479F11491FD0027B00FFB3F6 /* ShoeManager.swift */; };
 		47A4A9EF1FBC6AAB004BC86D /* Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A4A9EE1FBC6AAB004BC86D /* Connector.swift */; };
 		47B4F0701FCEB57900BE3CAA /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B4F06F1FCEB57900BE3CAA /* Shoe.swift */; };
 		47B6C3681F72850C00CA539E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6C3671F72850C00CA539E /* AppDelegate.swift */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		479786211FB9BCE3000FFE4B /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
 		479786231FB9CA06000FFE4B /* ByteUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteUtils.swift; sourceTree = "<group>"; };
+		479F11491FD0027B00FFB3F6 /* ShoeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoeManager.swift; sourceTree = "<group>"; };
 		47A4A9EE1FBC6AAB004BC86D /* Connector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
 		47B4F06F1FCEB57900BE3CAA /* Shoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
 		47B6C3641F72850C00CA539E /* SmartShoeBackend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartShoeBackend.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +117,7 @@
 				479786231FB9CA06000FFE4B /* ByteUtils.swift */,
 				47A4A9EE1FBC6AAB004BC86D /* Connector.swift */,
 				47B4F06F1FCEB57900BE3CAA /* Shoe.swift */,
+				479F11491FD0027B00FFB3F6 /* ShoeManager.swift */,
 			);
 			path = SmartShoeBackend;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				47B4F0701FCEB57900BE3CAA /* Shoe.swift in Sources */,
 				479786221FB9BCE3000FFE4B /* Packet.swift in Sources */,
 				47B6C36A1F72850C00CA539E /* ViewController.swift in Sources */,
+				479F114A1FD0027B00FFB3F6 /* ShoeManager.swift in Sources */,
 				47B6C3681F72850C00CA539E /* AppDelegate.swift in Sources */,
 				47A4A9EF1FBC6AAB004BC86D /* Connector.swift in Sources */,
 				479786241FB9CA06000FFE4B /* ByteUtils.swift in Sources */,
