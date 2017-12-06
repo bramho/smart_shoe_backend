@@ -11,6 +11,7 @@
 		479786241FB9CA06000FFE4B /* ByteUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479786231FB9CA06000FFE4B /* ByteUtils.swift */; };
 		479F114A1FD0027B00FFB3F6 /* ShoeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479F11491FD0027B00FFB3F6 /* ShoeManager.swift */; };
 		47A4A9EF1FBC6AAB004BC86D /* Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A4A9EE1FBC6AAB004BC86D /* Connector.swift */; };
+		47A96EB71FD7F6C500C7D820 /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96EB61FD7F6C500C7D820 /* StateManager.swift */; };
 		47B4F0701FCEB57900BE3CAA /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B4F06F1FCEB57900BE3CAA /* Shoe.swift */; };
 		47B6C3681F72850C00CA539E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6C3671F72850C00CA539E /* AppDelegate.swift */; };
 		47B6C36A1F72850C00CA539E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6C3691F72850C00CA539E /* ViewController.swift */; };
@@ -43,6 +44,7 @@
 		479786231FB9CA06000FFE4B /* ByteUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteUtils.swift; sourceTree = "<group>"; };
 		479F11491FD0027B00FFB3F6 /* ShoeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoeManager.swift; sourceTree = "<group>"; };
 		47A4A9EE1FBC6AAB004BC86D /* Connector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
+		47A96EB61FD7F6C500C7D820 /* StateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManager.swift; sourceTree = "<group>"; };
 		47B4F06F1FCEB57900BE3CAA /* Shoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
 		47B6C3641F72850C00CA539E /* SmartShoeBackend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartShoeBackend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47B6C3671F72850C00CA539E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -118,6 +120,7 @@
 				47A4A9EE1FBC6AAB004BC86D /* Connector.swift */,
 				47B4F06F1FCEB57900BE3CAA /* Shoe.swift */,
 				479F11491FD0027B00FFB3F6 /* ShoeManager.swift */,
+				47A96EB61FD7F6C500C7D820 /* StateManager.swift */,
 			);
 			path = SmartShoeBackend;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47B4F0701FCEB57900BE3CAA /* Shoe.swift in Sources */,
+				47A96EB71FD7F6C500C7D820 /* StateManager.swift in Sources */,
 				479786221FB9BCE3000FFE4B /* Packet.swift in Sources */,
 				47B6C36A1F72850C00CA539E /* ViewController.swift in Sources */,
 				479F114A1FD0027B00FFB3F6 /* ShoeManager.swift in Sources */,
@@ -458,7 +462,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = smartshoe.SmartShoeBackend;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -476,7 +480,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = smartshoe.SmartShoeBackend;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

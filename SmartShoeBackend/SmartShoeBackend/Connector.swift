@@ -26,8 +26,8 @@ class Connector :
     
     var canSendCommand: Bool = true;
     
-    var n4 = 0
-    var n5 = 0
+    var requestNumber = 0 
+    var requestValue = 0
     
     var requestCharacteristic : CBCharacteristic!
     var deviceName : String!
@@ -83,6 +83,8 @@ class Connector :
                     shoe = Shoe.init(shoeType: shoeType, sensor1: Int(result.sensorValue1), sensor2: Int(result.sensorValue2), sensor3: Int(result.sensorValue3), sensor4: Int(result.sensorValue4))
                     canSendCommand = false
                     delegate?.connectorHasReceivedData(self, shoeData: shoe)
+                    
+                    StateManager.instance.setCurrentState(StateManager.States.activated)
                 } else {
                     shoe.setSensor1(sensor1: Int(result.sensorValue1))
                     shoe.setSensor2(sensor2: Int(result.sensorValue2))
@@ -93,7 +95,12 @@ class Connector :
             }
             if(result.gameOver == 4) {
                 canSendCommand = true
+                StateManager.instance.setCurrentState(StateManager.States.completed)
             }
+        }
+        
+        if(error != nil) {
+            StateManager.instance.setCurrentState(StateManager.States.errorThree)
         }
     }
     
@@ -104,36 +111,36 @@ class Connector :
         
         switch(n) {
         case 1:
-            n4 = 2
-            n5 = 33
+            requestNumber = 2
+            requestValue = 33
             break
         case 2:
-            n4 = 4
-            n5 = 1 //current time is set in packet class
+            requestNumber = 4
+            requestValue = 1 //current time is set in packet class
             break
         case 3:
-            n4 = 16
-            n5 = n3
+            requestNumber = 16
+            requestValue = n3
             break
         case 4:
-            n4 = 32
-            n5 = n3
+            requestNumber = 32
+            requestValue = n3
             break
         case 5:
-            n4 = 3
-            n5 = 1
+            requestNumber = 3
+            requestValue = 1
             break
         case 6:
-            n4 = 3
-            n5 = 2
+            requestNumber = 3
+            requestValue = 2
             break
         case 7:
-            n4 = 5
-            n5 = 1
+            requestNumber = 5
+            requestValue = 1
             break
         case 8:
             print(device.state.rawValue)
-            let generateRequest : [UInt8] = packet.generateRequest(requestType: n4, requestValue: n5, shoeType: self.shoeType)
+            let generateRequest : [UInt8] = packet.generateRequest(requestType: requestNumber, requestValue: requestValue, shoeType: self.shoeType)
             if requestCharacteristic.uuid == REQUEST_UUID {
                 if(generateRequest.count < 20) {
                     let reqData = NSData(bytes: generateRequest, length: generateRequest.count * MemoryLayout<UInt8>.size)
@@ -153,20 +160,20 @@ class Connector :
             }
             break
         case 9:
-            n4 = 6
-            n5 = 2
+            requestNumber = 6
+            requestValue = 2
             break
         case 10:
-            n4 = 6
-            n5 = 1
+            requestNumber = 6
+            requestValue = 1
             break
         case 11:
-            n4 = 69
-            n5 = 1
+            requestNumber = 69
+            requestValue = 1
             break
         default:
-            n5 = n3
-            n4 = n2
+            requestValue = n3
+            requestNumber = n2
             break
         }
     }
