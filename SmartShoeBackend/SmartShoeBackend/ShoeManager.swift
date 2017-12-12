@@ -28,6 +28,9 @@ class ShoeManager : NSObject, CBCentralManagerDelegate, ConnectorDelegate, State
     var keepRequesting : Bool = false;
     
     var timer : Timer?
+    var interval: Double = 0.4
+    var maxTime: Double = 60.0
+    var timeTaken: Double = 0.0
     
     override init(){
         super.init()
@@ -58,7 +61,7 @@ class ShoeManager : NSObject, CBCentralManagerDelegate, ConnectorDelegate, State
                 StateManager.instance.setCurrentState(StateManager.States.activating)
                 
                 if self.timer == nil {
-                    self.timer = Timer.scheduledTimer(timeInterval: 0.4, target: self, selector:#selector(self.execute), userInfo: nil, repeats: true)
+                    self.timer = Timer.scheduledTimer(timeInterval: self.interval, target: self, selector:#selector(self.execute), userInfo: nil,  repeats: true)
                 }
             }
         }
@@ -67,10 +70,14 @@ class ShoeManager : NSObject, CBCentralManagerDelegate, ConnectorDelegate, State
     @objc func execute(){
         if(self.leftShoe.canSendCommand && self.rightShoe.canSendCommand) {
             // TODO: Find a maximum time of activation to throw error two in
-            // if(someTime > maxTime) {
-            //  StateManager.instance.setCurrentState(StateManager.States.errorTwo)
-            // }
-            //
+            timeTaken += interval
+            if(timeTaken > maxTime) {
+                StateManager.instance.setCurrentState(StateManager.States.errorTwo)
+                stopConnectionSession()
+                timeTaken = 0
+                startConnectionSession()
+            }
+            
             self.leftShoe.requestCommand(n: 8)
             self.rightShoe.requestCommand(n: 8)
         }

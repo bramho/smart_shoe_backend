@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		479786221FB9BCE3000FFE4B /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479786211FB9BCE3000FFE4B /* Packet.swift */; };
-		479786241FB9CA06000FFE4B /* ByteUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479786231FB9CA06000FFE4B /* ByteUtils.swift */; };
-		479F114A1FD0027B00FFB3F6 /* ShoeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479F11491FD0027B00FFB3F6 /* ShoeManager.swift */; };
-		47A4A9EF1FBC6AAB004BC86D /* Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A4A9EE1FBC6AAB004BC86D /* Connector.swift */; };
-		47A96EB71FD7F6C500C7D820 /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96EB61FD7F6C500C7D820 /* StateManager.swift */; };
-		47B4F0701FCEB57900BE3CAA /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B4F06F1FCEB57900BE3CAA /* Shoe.swift */; };
+		47A96F161FD95FFA00C7D820 /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96F101FD95FFA00C7D820 /* Shoe.swift */; };
+		47A96F171FD95FFA00C7D820 /* Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96F111FD95FFA00C7D820 /* Connector.swift */; };
+		47A96F181FD95FFA00C7D820 /* ByteUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96F121FD95FFA00C7D820 /* ByteUtils.swift */; };
+		47A96F191FD95FFA00C7D820 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96F131FD95FFA00C7D820 /* Packet.swift */; };
+		47A96F1A1FD95FFA00C7D820 /* ShoeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96F141FD95FFA00C7D820 /* ShoeManager.swift */; };
+		47A96F1B1FD95FFA00C7D820 /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96F151FD95FFA00C7D820 /* StateManager.swift */; };
 		47B6C3681F72850C00CA539E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6C3671F72850C00CA539E /* AppDelegate.swift */; };
 		47B6C36A1F72850C00CA539E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6C3691F72850C00CA539E /* ViewController.swift */; };
 		47B6C36D1F72850C00CA539E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47B6C36B1F72850C00CA539E /* Main.storyboard */; };
@@ -40,12 +40,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		479786211FB9BCE3000FFE4B /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
-		479786231FB9CA06000FFE4B /* ByteUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteUtils.swift; sourceTree = "<group>"; };
-		479F11491FD0027B00FFB3F6 /* ShoeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoeManager.swift; sourceTree = "<group>"; };
-		47A4A9EE1FBC6AAB004BC86D /* Connector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
-		47A96EB61FD7F6C500C7D820 /* StateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManager.swift; sourceTree = "<group>"; };
-		47B4F06F1FCEB57900BE3CAA /* Shoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
+		47A96F101FD95FFA00C7D820 /* Shoe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
+		47A96F111FD95FFA00C7D820 /* Connector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
+		47A96F121FD95FFA00C7D820 /* ByteUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteUtils.swift; sourceTree = "<group>"; };
+		47A96F131FD95FFA00C7D820 /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		47A96F141FD95FFA00C7D820 /* ShoeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoeManager.swift; sourceTree = "<group>"; };
+		47A96F151FD95FFA00C7D820 /* StateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateManager.swift; sourceTree = "<group>"; };
 		47B6C3641F72850C00CA539E /* SmartShoeBackend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartShoeBackend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47B6C3671F72850C00CA539E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; usesTabs = 0; };
 		47B6C3691F72850C00CA539E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +86,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		47A96F0D1FD95F7A00C7D820 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		47B6C35B1F72850C00CA539E = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +100,7 @@
 				47B6C37B1F72850C00CA539E /* SmartShoeBackendTests */,
 				47B6C3861F72850C00CA539E /* SmartShoeBackendUITests */,
 				47B6C3651F72850C00CA539E /* Products */,
+				47A96F0D1FD95F7A00C7D820 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,18 +117,18 @@
 		47B6C3661F72850C00CA539E /* SmartShoeBackend */ = {
 			isa = PBXGroup;
 			children = (
+				47A96F121FD95FFA00C7D820 /* ByteUtils.swift */,
+				47A96F111FD95FFA00C7D820 /* Connector.swift */,
+				47A96F131FD95FFA00C7D820 /* Packet.swift */,
+				47A96F101FD95FFA00C7D820 /* Shoe.swift */,
+				47A96F141FD95FFA00C7D820 /* ShoeManager.swift */,
+				47A96F151FD95FFA00C7D820 /* StateManager.swift */,
 				47B6C3671F72850C00CA539E /* AppDelegate.swift */,
 				47B6C3691F72850C00CA539E /* ViewController.swift */,
 				47B6C36B1F72850C00CA539E /* Main.storyboard */,
 				47B6C36E1F72850C00CA539E /* Assets.xcassets */,
 				47B6C3701F72850C00CA539E /* LaunchScreen.storyboard */,
 				47B6C3731F72850C00CA539E /* Info.plist */,
-				479786211FB9BCE3000FFE4B /* Packet.swift */,
-				479786231FB9CA06000FFE4B /* ByteUtils.swift */,
-				47A4A9EE1FBC6AAB004BC86D /* Connector.swift */,
-				47B4F06F1FCEB57900BE3CAA /* Shoe.swift */,
-				479F11491FD0027B00FFB3F6 /* ShoeManager.swift */,
-				47A96EB61FD7F6C500C7D820 /* StateManager.swift */,
 			);
 			path = SmartShoeBackend;
 			sourceTree = "<group>";
@@ -281,14 +289,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				47B4F0701FCEB57900BE3CAA /* Shoe.swift in Sources */,
-				47A96EB71FD7F6C500C7D820 /* StateManager.swift in Sources */,
-				479786221FB9BCE3000FFE4B /* Packet.swift in Sources */,
+				47A96F181FD95FFA00C7D820 /* ByteUtils.swift in Sources */,
+				47A96F1B1FD95FFA00C7D820 /* StateManager.swift in Sources */,
+				47A96F161FD95FFA00C7D820 /* Shoe.swift in Sources */,
+				47A96F171FD95FFA00C7D820 /* Connector.swift in Sources */,
+				47A96F1A1FD95FFA00C7D820 /* ShoeManager.swift in Sources */,
+				47A96F191FD95FFA00C7D820 /* Packet.swift in Sources */,
 				47B6C36A1F72850C00CA539E /* ViewController.swift in Sources */,
-				479F114A1FD0027B00FFB3F6 /* ShoeManager.swift in Sources */,
 				47B6C3681F72850C00CA539E /* AppDelegate.swift in Sources */,
-				47A4A9EF1FBC6AAB004BC86D /* Connector.swift in Sources */,
-				479786241FB9CA06000FFE4B /* ByteUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +464,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = SUX35HW2S3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SmartShoeBackend",
+				);
 				INFOPLIST_FILE = SmartShoeBackend/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -474,6 +486,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = SUX35HW2S3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SmartShoeBackend",
+				);
 				INFOPLIST_FILE = SmartShoeBackend/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

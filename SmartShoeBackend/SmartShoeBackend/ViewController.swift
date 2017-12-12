@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreBluetooth
+import SmartShoeBackend
 
 class ViewController:
     UIViewController,
