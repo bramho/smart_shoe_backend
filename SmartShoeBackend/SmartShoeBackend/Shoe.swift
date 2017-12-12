@@ -67,11 +67,11 @@ class Shoe {
         return [sensor1, sensor2, sensor3, sensor4]
     }
     
-    func getShoe(maxValue: Int) -> Shoe {
-        setSensor1(sensor1: Int(convertSensor(sensor: getSensor1(), maxValue: maxValue)))
-        setSensor2(sensor2: Int(convertSensor(sensor: getSensor2(), maxValue: maxValue)))
-        setSensor3(sensor3: Int(convertSensor(sensor: getSensor3(), maxValue: maxValue)))
-        setSensor4(sensor4: Int(convertSensor(sensor: getSensor4(), maxValue: maxValue)))
+    public func getShoe(maxValue: Int) -> Shoe {
+        self.sensor1 = convertSensor(sensor: getSensor1(), maxValue: maxValue)
+        self.sensor2 = convertSensor(sensor: getSensor2(), maxValue: maxValue)
+        self.sensor3 = convertSensor(sensor: getSensor3(), maxValue: maxValue)
+        self.sensor4 = convertSensor(sensor: getSensor4(), maxValue: maxValue)
         return self
     }
     
