@@ -9,6 +9,9 @@
 import Foundation
 
 class Packet {
+    /**
+        Create an instance of a Bluetooth Low Energy packet
+    */
     var verifiedPacket : Bool = false
     var CIPHER_CODES : [UInt8] = [115, 97, 108, 116]
     var advertisingTimeout : UInt8 = 0
@@ -39,7 +42,9 @@ class Packet {
     let byteUtils = ByteUtils()
     
     func generateRequest(requestType: Int, requestValue: Int, shoeType: Int) -> [UInt8] {
-        // Depending on the type of the shoe (left or right) certain bits regarding the request will need to be appended to the device in order to activate readout.
+        /**
+            Generate a request to send to the shoe.
+        */
         switch requestType {
             case 2:
                 // bit sequence header: 02 41 00 13 00 0f 00 04 00 52 0e 00
@@ -146,6 +151,13 @@ class Packet {
     
     
     func parseByteToPacket(array: [UInt8]) -> Packet {
+        /**
+            Parse input data to a Packet.
+        
+            *Values*
+        
+            `array` Received Bytes from the shoe. 
+        */
         var packet = Packet()
         var byteArray = array;
         if(byteArray.count != 20){
@@ -178,9 +190,7 @@ class Packet {
             let packet2 = Packet()
             packet2.command = byteArray[0]
             packet2.verifiedPacket = true
-            packet = packet2;
-             
-            print(byteArray)
+            packet = packet2
             
             switch(packet2.command) {
                 case 2:
