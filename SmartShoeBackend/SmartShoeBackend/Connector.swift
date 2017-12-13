@@ -13,6 +13,10 @@ import CoreBluetooth
 class Connector :
     NSObject,
     CBPeripheralDelegate {
+        
+    /**
+       Connector that links to each of the shoes for use in the applications.
+    */
     
     weak var delegate: ConnectorDelegate?
     
@@ -34,6 +38,15 @@ class Connector :
     var shoeType : Int!
     
     init(newDevice: CBPeripheral, shoeType: Int) {
+        /**
+            Initialize a new instance of the Connector Class
+        
+            *Values*
+        
+            `newDevice` A CBPeripheral object that is connected to and shall be used internally.
+        
+            `shoeType` An identifier for the type of shoe, left or right. (1 or 2)
+        */
         super.init()
         device = newDevice
         
@@ -105,6 +118,13 @@ class Connector :
     }
     
     func requestCommand(n: Int) {
+        /**
+            Set or request a command based on the input.
+        
+            *values*
+        
+            `n` The command requested. The default for performing a requesting the command is 8. 
+        */
         let n2 : Int = 0
         let n3 : Int = 0
         let packet = Packet()
@@ -181,6 +201,9 @@ class Connector :
 
 extension Array {
     func chunk(_ chunkSize: Int) -> [[Element]] {
+        /**
+            Chunk an array into equal pieces
+        */
         return stride(from: 0, to: self.count, by: chunkSize).map({
             (startIndex) -> [Element] in let endIndex = (startIndex.advanced(by: chunkSize) > self.count) ? self.count-startIndex : chunkSize
             return Array(self[startIndex..<startIndex.advanced(by: endIndex)])
