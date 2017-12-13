@@ -9,6 +9,9 @@
 import Foundation
 
 class Shoe {
+    /**
+        Shoe data structure to hold the data from the pressure sensors in the shoe.
+    */
     var shoeType : Int
     var sensor1 : Double
     var sensor2 : Double
@@ -16,6 +19,21 @@ class Shoe {
     var sensor4 : Double
     
     init(shoeType: Int, sensor1: Int, sensor2: Int, sensor3: Int, sensor4: Int) {
+        /**
+            Initialize a new instance of the Shoe Class.
+        
+            *Values*
+            
+            `shoeType` Determines which shoe the data is from. 1 is left, 2 is right
+        
+            `sensor1` First Sensor of the shoe
+        
+            `sensor2` Second Sensor of the shoe
+        
+            `sensor3` Third Sensor of the shoe
+
+            `sensor4` Fourth Sensor of the shoe
+        */
         self.shoeType = shoeType
         self.sensor1 = Double(sensor1)
         self.sensor2 = Double(sensor2)
@@ -68,6 +86,13 @@ class Shoe {
     }
     
     public func getShoe(maxValue: Int) -> Shoe {
+        /**
+            Get the Shoe with the sensor values normalized to values between 0 and 1.
+        
+            *Values*
+        
+            `maxValue` Maximum Value to normalize the values of the sensors on
+        */
         self.sensor1 = convertSensor(sensor: getSensor1(), maxValue: maxValue)
         self.sensor2 = convertSensor(sensor: getSensor2(), maxValue: maxValue)
         self.sensor3 = convertSensor(sensor: getSensor3(), maxValue: maxValue)
@@ -76,6 +101,15 @@ class Shoe {
     }
     
     func convertSensor(sensor: Double, maxValue: Int) -> Double {
+        /**
+            Convert Sensor Value to a normalized value.
+        
+            *Values*
+        
+            `sensor` Sensor value to be converted
+        
+            `maxValue` Value to divide by
+        */
         return sensor / Double(maxValue)
     }
 }
