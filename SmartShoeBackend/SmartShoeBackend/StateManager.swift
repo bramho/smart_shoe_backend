@@ -9,12 +9,20 @@
 import Foundation
 
 class StateManager {
+    /**
+        Internal StateManager for the BackEnd to track its state.
+    
+        This uses a Singleton pattern, use StateManager.instance to call functionality or variables. 
+    */
     static let instance = StateManager()
     
     weak var delegate: StateManagerDelegate!
     var currentState : States = States.base
     
     enum States: Int {
+        /**
+            States that are integrated into the application.
+        */
         case connecting = 0
         case connected = 1
         case starting = 2
@@ -34,10 +42,20 @@ class StateManager {
     }
     
     func getCurrentState() -> States {
+        /**
+            Retrieve the current state of the BackEnd
+        */
         return currentState
     }
     
     func setCurrentState(_ value: States) {
+        /**
+            Sets the current state of the Backend.
+        
+            *Values*   
+        
+            `value` State to set.
+        */
         currentState = value
         
         switch(value){
