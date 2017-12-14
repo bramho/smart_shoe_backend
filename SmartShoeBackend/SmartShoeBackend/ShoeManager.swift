@@ -10,7 +10,9 @@ import Foundation
 import CoreBluetooth
 
 class ShoeManager : NSObject, CBCentralManagerDelegate, ConnectorDelegate, StateManagerDelegate {
-    
+    /**
+        Manager for the IOFit Shoes. 
+    */
     weak var delegate: ShoeManagerDelegate?
     
     var manager: CBCentralManager!
@@ -33,12 +35,18 @@ class ShoeManager : NSObject, CBCentralManagerDelegate, ConnectorDelegate, State
     var timeTaken: Double = 0.0
     
     override init(){
+        /**
+            Initialize ShoeManager
+        */
         super.init()
         manager = CBCentralManager(delegate: self, queue: nil)
         StateManager.instance.delegate = self
     }
     
     func startConnectionSession() {
+        /**
+            Start a connection session. 
+        */
         StateManager.instance.setCurrentState(StateManager.States.starting)
         leftShoe.requestCommand(n: 11)
         rightShoe.requestCommand(n: 11)
@@ -68,6 +76,9 @@ class ShoeManager : NSObject, CBCentralManagerDelegate, ConnectorDelegate, State
     }
     
     @objc func execute(){
+        /**
+            Executes the last requested command multiple times.
+        */
         if(self.leftShoe.canSendCommand && self.rightShoe.canSendCommand) {
             // TODO: Find a maximum time of activation to throw error two in
             timeTaken += interval
@@ -84,6 +95,9 @@ class ShoeManager : NSObject, CBCentralManagerDelegate, ConnectorDelegate, State
     }
     
     func stopConnectionSession() {
+        /**
+            Stops a connection session.
+        */
         if self.timer != nil {
             StateManager.instance.setCurrentState(StateManager.States.stopped)
             self.timer?.invalidate()
