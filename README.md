@@ -28,3 +28,9 @@ class ViewController: UIViewController, ShoeManagerDelegate {
       print(data.getShoe(maxValue: 500)) // This normalizes data to a value compared to 500. Raw Values are also usable by getting .getSensors before.
    }
 }
+```
+
+Afterwards you are able to call `manager.startConnectionSession()` and `manager.stopConnectionSession()`. Start initializes the connection session to the Shoe. If, in the meantime, you want to give the user the opportunity to cancel this proces, call the stop connection session.
+
+A connection session restarts automatically if needed and will automatically output the data from the shoe when connected.
+

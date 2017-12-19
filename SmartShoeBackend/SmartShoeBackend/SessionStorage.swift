@@ -2,6 +2,8 @@ import Foundation
 
 class SessionStorage { 
 
+
+    static let instance = SessionStorage()
     var sessions : [Session]?
     var currentSession : Session?
 
@@ -9,6 +11,14 @@ class SessionStorage {
         super.init()
 
         sessions = loadSessions()
+    }
+
+    func deleteSession(_ selectedSession: Session) { 
+        for session in sessions { 
+            if(session = selectedSession) { 
+                session = sessions.filter() { $0 !== selectedSession}
+            }
+        }
     }
     
     private func saveSessions() { 
@@ -80,6 +90,26 @@ class Session: NSObject, NSCoding {
 
     }
 
+}
+
+class SessionPlayer { 
+
+    var sessions: [Session]?
+
+    init() { 
+        super.init()
+
+        sessions = SessionStorage.instance.loadSessions()
+    }
+
+    playSession(_ selectedSession: Session) {
+        
+    }
+
+}
+
+protocol SessionPlayerDelegate { 
+    func sessionPlayDataUpdated(_ data: Shoe)
 }
 
 struct SessionPropertyKeys { 
