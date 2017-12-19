@@ -1,8 +1,6 @@
 import Foundation
 
 class SessionStorage { 
-
-
     static let instance = SessionStorage()
     var sessions : [Session]?
     var currentSession : Session?
@@ -65,7 +63,7 @@ class Session: NSObject, NSCoding {
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("repressSessions")
 
-    init(date: Date!) {
+    init(_ date: Date!) {
         super.init();
         sessionDate = date
     }
@@ -94,6 +92,9 @@ class Session: NSObject, NSCoding {
 
 class SessionPlayer { 
 
+    static let instance = SessionPlayer()
+    weak var delegate: SessionPlayerDelegate!
+
     var sessions: [Session]?
 
     init() { 
@@ -103,7 +104,19 @@ class SessionPlayer {
     }
 
     playSession(_ selectedSession: Session) {
-        
+        // for something
+
+            for i in selectedSession.dataLeftShoe.count { 
+                var leftShoe = Shoe(1, sensor1: Int(dataLeftShoe[i][0], sensor2: Int(dataLeftShoe[i][1]), sensor3: Int(dataLeftShoe[i][2]), sensor4: Int(dataLeftShoe[i][3])))
+
+                delegate.sessionPlayDataUpdated(leftShoe)
+            }
+
+            for j in selectedSession.dataRightShoe.count { 
+                var rightShoe = Shoe(1, sensor1: Int(dataRightShoe[i][0], sensor2: Int(dataRightShoe[i][1]), sensor3: Int(dataRightShoe[i][2]), sensor4: Int(dataRightShoe[i][3])))
+
+                delegate.sessionPlayDataUpdated(rightShoe)
+            }
     }
 
 }

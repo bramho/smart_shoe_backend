@@ -18,7 +18,7 @@ class Shoe {
     var sensor3 : Double
     var sensor4 : Double
     
-    init(shoeType: Int, sensor1: Int, sensor2: Int, sensor3: Int, sensor4: Int) {
+    init(_ shoeType: Int, sensor1: Int, sensor2: Int, sensor3: Int, sensor4: Int) {
         /**
             Initialize a new instance of the Shoe Class.
         
