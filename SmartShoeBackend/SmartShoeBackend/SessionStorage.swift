@@ -31,6 +31,7 @@ class SessionStorage {
         }
 
         let isSuccesfulSave = NSKeyedArchiver.archiveRootObject(sessions, toFile: Session.ArchiveURL.path)
+        SessionPlayer.instance.refreshSessions()
         print(isSuccesfulSave)
     }
 
@@ -68,7 +69,7 @@ class Session: NSObject, NSCoding {
         sessionDate = date
     }
     
-    update(shoeType: Int, newData: [Double]) { 
+    func update(shoeType: Int, newData: [Double]) { 
         if(shoeType == 1) { 
             dataLeftShoe.append(newData)
         } else if (shoeType == 2 ) { 
@@ -78,7 +79,7 @@ class Session: NSObject, NSCoding {
 
     //NSCoding functions
 
-    encode(with aCoder: NSCoder) {
+    func encode(with aCoder: NSCoder) {
         aCoder.encode(sessionDate, forKey: SessionPropertyKeys.sessionDate) 
         aCoder.encode(dataLeftShoe, forKey: SessionPropertyKeys.dataLeftShoe)
         aCoder.encode(dataRightShoe, forKey: SessionPropertyKeys.dataRightShoe)
@@ -103,7 +104,11 @@ class SessionPlayer {
         sessions = SessionStorage.instance.loadSessions()
     }
 
-    playSession(_ selectedSession: Session) {
+    func refreshSessions() { 
+        sessions = SessionStorage.instance.loadSessions()
+    }
+
+    func playSession(_ selectedSession: Session) {
         // for something
 
             for i in selectedSession.dataLeftShoe.count { 
