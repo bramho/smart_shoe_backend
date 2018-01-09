@@ -93,21 +93,25 @@ class Connector :
             let result = packet.parseByteToPacket(array: values)
             if(result.command == 4 || result.command == 64){
                 if(canSendCommand){
-                    shoe = Shoe.init(shoeType: shoeType, sensor1: Int(result.sensorValue1), sensor2: Int(result.sensorValue2), sensor3: Int(result.sensorValue3), sensor4: Int(result.sensorValue4))
+                    shoe = Shoe.init(shoeType, sensor1: Int(result.sensorValue1), sensor2: Int(result.sensorValue2), sensor3: Int(result.sensorValue3), sensor4: Int(result.sensorValue4))
                     canSendCommand = false
                     delegate?.connectorHasReceivedData(self, shoeData: shoe)
-                    
+                    SessionStorage.instance.recordSession(shoeType: shoeType, shoeData: shoe.getSensors())
                     StateManager.instance.setCurrentState(StateManager.States.activated)
                 } else {
                     shoe.setSensor1(sensor1: Int(result.sensorValue1))
                     shoe.setSensor2(sensor2: Int(result.sensorValue2))
                     shoe.setSensor3(sensor3: Int(result.sensorValue3))
                     shoe.setSensor4(sensor4: Int(result.sensorValue4))
+                    
+                    SessionStorage.instance.recordSession(shoeType: shoeType, shoeData: shoe.getSensors())
+                    
                     delegate?.connectorHasReceivedData(self, shoeData: shoe)
                 }
             }
             if(result.gameOver == 4) {
                 canSendCommand = true
+                //SessionStorage.instance.stopRecordingSession()
                 StateManager.instance.setCurrentState(StateManager.States.completed)
             }
         }

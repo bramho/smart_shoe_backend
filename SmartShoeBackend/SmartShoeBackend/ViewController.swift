@@ -8,11 +8,11 @@
 
 import UIKit
 import CoreBluetooth
-import SmartShoeBackend
 
 class ViewController:
     UIViewController,
-    ShoeManagerDelegate {
+    ShoeManagerDelegate,
+    SessionPlayerDelegate {
     
     var shoeManager : ShoeManager!
     ///Mark properties:
@@ -22,11 +22,17 @@ class ViewController:
         
         shoeManager = ShoeManager.init()
         shoeManager.delegate = self
+        SessionPlayer.instance.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func sessionPlayDataUpdated(_ data: Shoe) {
+        print(data.getShoeType())
+        print(data.getShoe(maxValue: 600).getSensors())
     }
     
     func sensorDataReceivedFromShoe(_ data: Shoe) {
@@ -38,6 +44,9 @@ class ViewController:
     }
     @IBAction func startSession(_ sender: Any) {
         shoeManager.startConnectionSession()
+    }
+    @IBAction func testSession(_ sender: Any) {
+        SessionPlayer.instance.demoSession()
     }
 }
 

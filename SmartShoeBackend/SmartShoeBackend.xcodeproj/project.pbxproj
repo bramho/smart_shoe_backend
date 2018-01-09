@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47649CB01FEA56260095A82D /* SessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47649CAF1FEA56260095A82D /* SessionStorage.swift */; };
+		47649CB21FEA60C90095A82D /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47649CB11FEA60C90095A82D /* Session.swift */; };
+		47649CB41FEA61010095A82D /* SessionPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47649CB31FEA61010095A82D /* SessionPlayer.swift */; };
 		47A96F161FD95FFA00C7D820 /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96F101FD95FFA00C7D820 /* Shoe.swift */; };
 		47A96F171FD95FFA00C7D820 /* Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96F111FD95FFA00C7D820 /* Connector.swift */; };
 		47A96F181FD95FFA00C7D820 /* ByteUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96F121FD95FFA00C7D820 /* ByteUtils.swift */; };
@@ -40,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		47649CAF1FEA56260095A82D /* SessionStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionStorage.swift; sourceTree = "<group>"; };
+		47649CB11FEA60C90095A82D /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		47649CB31FEA61010095A82D /* SessionPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPlayer.swift; sourceTree = "<group>"; };
 		47A96F101FD95FFA00C7D820 /* Shoe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
 		47A96F111FD95FFA00C7D820 /* Connector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
 		47A96F121FD95FFA00C7D820 /* ByteUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteUtils.swift; sourceTree = "<group>"; };
@@ -117,6 +123,7 @@
 		47B6C3661F72850C00CA539E /* SmartShoeBackend */ = {
 			isa = PBXGroup;
 			children = (
+				47649CAF1FEA56260095A82D /* SessionStorage.swift */,
 				47A96F121FD95FFA00C7D820 /* ByteUtils.swift */,
 				47A96F111FD95FFA00C7D820 /* Connector.swift */,
 				47A96F131FD95FFA00C7D820 /* Packet.swift */,
@@ -129,6 +136,8 @@
 				47B6C36E1F72850C00CA539E /* Assets.xcassets */,
 				47B6C3701F72850C00CA539E /* LaunchScreen.storyboard */,
 				47B6C3731F72850C00CA539E /* Info.plist */,
+				47649CB11FEA60C90095A82D /* Session.swift */,
+				47649CB31FEA61010095A82D /* SessionPlayer.swift */,
 			);
 			path = SmartShoeBackend;
 			sourceTree = "<group>";
@@ -289,11 +298,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47649CB21FEA60C90095A82D /* Session.swift in Sources */,
 				47A96F181FD95FFA00C7D820 /* ByteUtils.swift in Sources */,
 				47A96F1B1FD95FFA00C7D820 /* StateManager.swift in Sources */,
 				47A96F161FD95FFA00C7D820 /* Shoe.swift in Sources */,
 				47A96F171FD95FFA00C7D820 /* Connector.swift in Sources */,
+				47649CB01FEA56260095A82D /* SessionStorage.swift in Sources */,
 				47A96F1A1FD95FFA00C7D820 /* ShoeManager.swift in Sources */,
+				47649CB41FEA61010095A82D /* SessionPlayer.swift in Sources */,
 				47A96F191FD95FFA00C7D820 /* Packet.swift in Sources */,
 				47B6C36A1F72850C00CA539E /* ViewController.swift in Sources */,
 				47B6C3681F72850C00CA539E /* AppDelegate.swift in Sources */,
