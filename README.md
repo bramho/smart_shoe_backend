@@ -57,3 +57,6 @@ class ViewController: UIViewController, ShoeManagerDelegate, StateManagerDelegat
    }
 }
 ```
+
+### SessionStorage
+If you're looking for a way to store the data from the shoe, you might want to use the `feature/sessionStorage` branch. Please beware that this feature was tested, but never implemented because of time constraints. Your mileage with may vary.
