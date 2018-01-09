@@ -1,0 +1,4 @@
+framework module SmartShoeBackend {
+    header "SmartShoeBackend-Swift.h"
+    requires objc
+}
