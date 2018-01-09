@@ -28,3 +28,32 @@ class ViewController: UIViewController, ShoeManagerDelegate {
       print(data.getShoe(maxValue: 500)) // This normalizes data to a value compared to 500. Raw Values are also usable by getting .getSensors before.
    }
 }
+```
+# Additional Systems
+
+### StateManager
+If you're wanting ot use the inbuilt StateManager, it's a singleton. Simply call 'StateManager.instance' in order to access it's (public) properies using the functions. In order to implement 'tracking' of the State Changes, you will need to implement the StateManagerDelegate as follows:
+
+```
+class ViewController: UIViewController, ShoeManagerDelegate, StateManagerDelegate {
+   var manager: ShoeManager! //this is implicitly typed as it's set later. 
+   
+   override func viewDidLoad(){
+    viewDidLoad.super()
+    
+    manager = ShoeManager.init() // Initialize new Shoe Manager
+    manager.delegate = self
+    
+    StateManager.instance.delegate = self
+   }
+   
+   
+   sensorDataReceivedFromShoe(_ data: Shoe) {
+      print(data.getShoe(maxValue: 500)) // This normalizes data to a value compared to 500. Raw Values are also usable by getting .getSensors before.
+   }
+   
+   func stateUpdated(_ state: Int, _ error: String?) {
+      //Implement the handling of the states here. If you want to view the 'values' of the states, you can view them in the StateManager file. 
+   }
+}
+```
