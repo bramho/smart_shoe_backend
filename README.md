@@ -4,7 +4,7 @@ This Backend facilitates the connection and data-transfer between a Swift applic
 
 # Installing
 
-Just download the files and place them in a seperate file folder in your xcode project.
+Just download the files and place them in a seperate file folder in your xcode project and remove what you don't need.
 
 # Usage
 
@@ -29,6 +29,9 @@ class ViewController: UIViewController, ShoeManagerDelegate {
    }
 }
 ```
+
+After you've set this up, call the `startConnectionSession()` function on the manager to start. If it's working on creating a connection and want to stop it, you will have to call the `stopConnectionSession()` function on the manager. All of the connecting will be done automatically and the 'state' of the connection to the device during connecting will be output to the console.  
+
 # Additional Systems
 
 ### StateManager
